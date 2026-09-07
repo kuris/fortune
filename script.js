@@ -1474,45 +1474,165 @@
   }
 
   /**
-   * 2. today.html - 오늘의 운세 페이지 초기화
+   * 2. today.html - 오늘의 운세 페이지 초기화 (질문 인터랙션 & 맞춤 운세 렌더링)
    */
   function initTodayPage() {
-    const rng = getRng('today_fortune');
+    const inputCard = document.getElementById('today-input-card');
+    const resultCard = document.getElementById('today-result-card');
+    const birthInput = document.getElementById('user-birthdate');
+    const calendarTypeSelect = document.getElementById('user-calendar-type');
+    const genderPills = document.querySelectorAll('#gender-pill-group .option-pill');
+    const focusPills = document.querySelectorAll('#focus-pill-group .option-pill');
+    const btnReveal = document.getElementById('btn-reveal-today');
+    const btnReopen = document.getElementById('btn-reopen-input');
+    const focusBadge = document.getElementById('today-focus-badge');
 
-    const keyword = pickItem(FORTUNE_KEYWORDS, rng);
-    const general = pickItem(GENERAL_FORTUNES, rng);
-    const love = pickItem(LOVE_FORTUNES, rng);
-    const money = pickItem(MONEY_FORTUNES, rng);
-    const work = pickItem(WORK_FORTUNES, rng);
-    const caution = pickItem(CAUTION_FORTUNES, rng);
-    const action = pickItem(ACTION_FORTUNES, rng);
-    const quote = pickItem(QUOTE_FORTUNES, rng);
-    const color = pickItem(LUCKY_COLORS, rng);
-    const luckyNumber = Math.floor(rng() * 99) + 1;
+    // 1. 저장된 사용자 정보 불러오기
+    let savedBirth = localStorage.getItem('fortune_user_birth');
+    let savedCalendar = localStorage.getItem('fortune_user_calendar') || 'solar';
+    let savedGender = localStorage.getItem('fortune_user_gender') || 'none';
+    let savedFocus = localStorage.getItem('fortune_user_focus') || 'all';
 
-    const elKeyword = document.getElementById('tf-keyword');
-    const elGeneral = document.getElementById('tf-general');
-    const elLove = document.getElementById('tf-love');
-    const elMoney = document.getElementById('tf-money');
-    const elWork = document.getElementById('tf-work');
-    const elCaution = document.getElementById('tf-caution');
-    const elAction = document.getElementById('tf-action');
-    const elQuote = document.getElementById('tf-quote');
-    const elColorName = document.getElementById('tf-color-name');
-    const elColorDot = document.getElementById('tf-color-dot');
-    const elNumber = document.getElementById('tf-number');
+    if (savedBirth && birthInput) {
+      birthInput.value = savedBirth;
+    }
+    if (calendarTypeSelect) {
+      calendarTypeSelect.value = savedCalendar;
+    }
 
-    if (elKeyword) elKeyword.textContent = keyword;
-    if (elGeneral) elGeneral.textContent = general;
-    if (elLove) elLove.textContent = love;
-    if (elMoney) elMoney.textContent = money;
-    if (elWork) elWork.textContent = work;
-    if (elCaution) elCaution.textContent = caution;
-    if (elAction) elAction.textContent = action;
-    if (elQuote) elQuote.textContent = `“${quote}”`;
-    if (elColorName) elColorName.textContent = color.name;
-    if (elColorDot) elColorDot.style.backgroundColor = color.code;
-    if (elNumber) elNumber.textContent = luckyNumber;
+    // 성별 탭 클릭
+    let currentGender = savedGender;
+    genderPills.forEach(pill => {
+      if (pill.getAttribute('data-val') === currentGender) {
+        genderPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+      }
+      pill.addEventListener('click', () => {
+        genderPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentGender = pill.getAttribute('data-val');
+      });
+    });
+
+    // 관심사 탭 클릭
+    let currentFocus = savedFocus;
+    focusPills.forEach(pill => {
+      if (pill.getAttribute('data-val') === currentFocus) {
+        focusPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+      }
+      pill.addEventListener('click', () => {
+        focusPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentFocus = pill.getAttribute('data-val');
+      });
+    });
+
+    // 운세 렌더링 함수 (입력값 시드 기반)
+    function renderPersonalFortune(birth, calendar, gender, focus) {
+      const seed = `today_${getTodayDateString()}_${birth}_${calendar}_${gender}_${focus}`;
+      const rng = getRng(seed);
+
+      const keyword = pickItem(FORTUNE_KEYWORDS, rng);
+      const general = pickItem(GENERAL_FORTUNES, rng);
+      const love = pickItem(LOVE_FORTUNES, rng);
+      const money = pickItem(MONEY_FORTUNES, rng);
+      const work = pickItem(WORK_FORTUNES, rng);
+      const caution = pickItem(CAUTION_FORTUNES, rng);
+      const action = pickItem(ACTION_FORTUNES, rng);
+      const quote = pickItem(QUOTE_FORTUNES, rng);
+      const color = pickItem(LUCKY_COLORS, rng);
+      const luckyNumber = Math.floor(rng() * 99) + 1;
+
+      const elKeyword = document.getElementById('tf-keyword');
+      const elGeneral = document.getElementById('tf-general');
+      const elLove = document.getElementById('tf-love');
+      const elMoney = document.getElementById('tf-money');
+      const elWork = document.getElementById('tf-work');
+      const elCaution = document.getElementById('tf-caution');
+      const elAction = document.getElementById('tf-action');
+      const elQuote = document.getElementById('tf-quote');
+      const elColorName = document.getElementById('tf-color-name');
+      const elColorDot = document.getElementById('tf-color-dot');
+      const elNumber = document.getElementById('tf-number');
+
+      if (elKeyword) elKeyword.textContent = keyword;
+      if (elGeneral) elGeneral.textContent = general;
+      if (elLove) elLove.textContent = love;
+      if (elMoney) elMoney.textContent = money;
+      if (elWork) elWork.textContent = work;
+      if (elCaution) elCaution.textContent = caution;
+      if (elAction) elAction.textContent = action;
+      if (elQuote) elQuote.textContent = `“${quote}”`;
+      if (elColorName) elColorName.textContent = color.name;
+      if (elColorDot) elColorDot.style.backgroundColor = color.code;
+      if (elNumber) elNumber.textContent = luckyNumber;
+
+      // 관심사 뱃지 표기
+      if (focusBadge) {
+        const focusNames = {
+          'all': '🌟 오늘의 집중: 종합 총운',
+          'love': '💖 오늘의 집중: 연애·인간관계',
+          'money': '💰 오늘의 집중: 금전·재물운',
+          'work': '💼 오늘의 집중: 직장·학업운'
+        };
+        focusBadge.textContent = focusNames[focus] || focusNames['all'];
+        focusBadge.style.display = 'inline-flex';
+      }
+
+      // 특정 영역 하이라이트 조정
+      const rowLove = elLove ? elLove.closest('.result-row') : null;
+      const rowMoney = elMoney ? elMoney.closest('.result-row') : null;
+      const rowWork = elWork ? elWork.closest('.result-row') : null;
+      const rowGeneral = elGeneral ? elGeneral.closest('.result-row') : null;
+
+      [rowGeneral, rowLove, rowMoney, rowWork].forEach(r => r && r.classList.remove('highlight'));
+
+      if (focus === 'love' && rowLove) rowLove.classList.add('highlight');
+      else if (focus === 'money' && rowMoney) rowMoney.classList.add('highlight');
+      else if (focus === 'work' && rowWork) rowWork.classList.add('highlight');
+      else if (rowGeneral) rowGeneral.classList.add('highlight');
+    }
+
+    // [오늘의 맞춤 운세 확인하기] 버튼 클릭
+    if (btnReveal) {
+      btnReveal.addEventListener('click', () => {
+        const birth = birthInput ? birthInput.value : '1998-05-20';
+        const calendar = calendarTypeSelect ? calendarTypeSelect.value : 'solar';
+
+        localStorage.setItem('fortune_user_birth', birth);
+        localStorage.setItem('fortune_user_calendar', calendar);
+        localStorage.setItem('fortune_user_gender', currentGender);
+        localStorage.setItem('fortune_user_focus', currentFocus);
+
+        btnReveal.textContent = '🔮 기운을 읽는 중...';
+        btnReveal.disabled = true;
+
+        setTimeout(() => {
+          renderPersonalFortune(birth, calendar, currentGender, currentFocus);
+          btnReveal.textContent = '🔮 오늘의 맞춤 운세 확인하기';
+          btnReveal.disabled = false;
+
+          if (resultCard) {
+            resultCard.style.display = 'block';
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          showToast("나만을 위한 오늘의 맞춤 운세가 완성되었습니다! ✨");
+        }, 500);
+      });
+    }
+
+    // [다른 정보로 다시 보기] 버튼 클릭
+    if (btnReopen && inputCard) {
+      btnReopen.addEventListener('click', () => {
+        inputCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast("생년월일과 관심사를 변경하고 다시 확인해보세요!");
+      });
+    }
+
+    // 기본 최초 렌더링
+    const initBirth = birthInput ? birthInput.value : (savedBirth || '1998-05-20');
+    renderPersonalFortune(initBirth, savedCalendar, currentGender, currentFocus);
   }
 
   /**

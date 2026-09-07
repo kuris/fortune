@@ -79,8 +79,51 @@
     <!-- 광고 슬롯 -->
     <div class="ad-slot"></div>
 
+    <!-- 운세 확인 전 인터랙티브 미니 질문 카드 -->
+    <section class="fortune-input-card" id="today-input-card">
+      <div class="input-card-title">
+        <span>✨</span> 나만을 위한 오늘 하루 맞춤 운세
+      </div>
+      <p class="input-card-desc">생년월일과 오늘 가장 신경 쓰이는 부분을 선택하시면 나만을 위한 맞춤 조언이 열립니다.</p>
+
+      <div class="input-field-group">
+        <label class="input-field-label" for="user-birthdate">📅 태어난 생년월일</label>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="date" id="user-birthdate" class="fortune-input-control" value="1998-05-20" style="flex: 1;">
+          <select id="user-calendar-type" class="fortune-input-control" style="width: 85px;">
+            <option value="solar">양력</option>
+            <option value="lunar">음력</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-field-group">
+        <label class="input-field-label">성별 (선택)</label>
+        <div class="option-pill-group" id="gender-pill-group" role="group">
+          <button type="button" class="option-pill active" data-val="none">✨ 선택 안 함</button>
+          <button type="button" class="option-pill" data-val="female">👩 여성</button>
+          <button type="button" class="option-pill" data-val="male">👨 남성</button>
+        </div>
+      </div>
+
+      <div class="input-field-group">
+        <label class="input-field-label">🎯 오늘 가장 궁금한 운세는?</label>
+        <div class="option-pill-group" id="focus-pill-group" role="group">
+          <button type="button" class="option-pill active" data-val="all">🌟 전체 총운</button>
+          <button type="button" class="option-pill" data-val="love">💖 연애·인간관계</button>
+          <button type="button" class="option-pill" data-val="money">💰 금전·재물운</button>
+          <button type="button" class="option-pill" data-val="work">💼 직장·학업운</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" id="btn-reveal-today" style="width: 100%; font-size: 16px; padding: 14px; margin-top: 6px;">
+        🔮 오늘의 맞춤 운세 확인하기
+      </button>
+    </section>
+
     <!-- 오늘의 운세 결과 카드 -->
     <main class="fortune-result-card" id="today-result-card">
+      <div id="today-focus-badge" class="focus-highlight-badge" style="display: none;"></div>
       <div class="result-header">
         <div class="result-target-title">
           <span>🍀</span> 오늘의 종합 운세
@@ -157,6 +200,9 @@
       </button>
       <button type="button" class="btn-secondary js-share-btn">
         🔗 결과 공유하기
+      </button>
+      <button type="button" class="btn-secondary" id="btn-reopen-input">
+        ✏️ 다른 정보로 다시 보기
       </button>
       <a href="tarot.html" class="btn-secondary">
         🃏 타로 카드 뽑기
