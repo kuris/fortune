@@ -535,6 +535,27 @@ button {
 
 /* 모바일 뷰 최적화 (iPhone SE 375px에서도 3열 깔끔 노출) */
 @media (max-width: 480px) {
+  .site-head {
+    padding: 12px 0;
+    margin-bottom: 14px;
+  }
+  .brand-logo {
+    font-size: 20px;
+    gap: 5px;
+  }
+  .brand-logo .brand-icon {
+    font-size: 22px;
+  }
+  .header-right {
+    gap: 6px;
+  }
+  .family-btn {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  #header-auth-btn #auth-status-text {
+    display: none;
+  }
   .card-list.view-grid {
     gap: 8px;
   }
