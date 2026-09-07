@@ -409,20 +409,152 @@
     { name: "부드러운 모카 브라운", code: "#78350F" }
   ];
 
-  // 12간지 띠 목록
+  // 12간지 띠 목록 (출생연도 및 2026년 기준 만 나이 데이터 매핑)
   const ZODIAC_LIST = [
-    { key: "rat", name: "쥐띠", icon: "🐭", years: "48, 60, 72, 84, 96, 08년생" },
-    { key: "ox", name: "소띠", icon: "🐮", years: "49, 61, 73, 85, 97, 09년생" },
-    { key: "tiger", name: "호랑이띠", icon: "🐯", years: "50, 62, 74, 86, 98, 10년생" },
-    { key: "rabbit", name: "토끼띠", icon: "🐰", years: "51, 63, 75, 87, 99, 11년생" },
-    { key: "dragon", name: "용띠", icon: "🐲", years: "52, 64, 76, 88, 00, 12년생" },
-    { key: "snake", name: "뱀띠", icon: "🐍", years: "53, 65, 77, 89, 01, 13년생" },
-    { key: "horse", name: "말띠", icon: "🐴", years: "54, 66, 78, 90, 02, 14년생" },
-    { key: "sheep", name: "양띠", icon: "🐑", years: "55, 67, 79, 91, 03, 15년생" },
-    { key: "monkey", name: "원숭이띠", icon: "🐵", years: "56, 68, 80, 92, 04, 16년생" },
-    { key: "rooster", name: "닭띠", icon: "🐔", years: "57, 69, 81, 93, 05, 17년생" },
-    { key: "dog", name: "개띠", icon: "🐶", years: "58, 70, 82, 94, 06, 18년생" },
-    { key: "pig", name: "돼지띠", icon: "🐷", years: "59, 71, 83, 95, 07, 19년생" }
+    {
+      key: "rat", name: "쥐띠", icon: "🐭",
+      years: [
+        { year: 2008, age: 18, label: "2008년생 (만 18세)" },
+        { year: 1996, age: 30, label: "1996년생 (만 30세)" },
+        { year: 1984, age: 42, label: "1984년생 (만 42세)" },
+        { year: 1972, age: 54, label: "1972년생 (만 54세)" },
+        { year: 1960, age: 66, label: "1960년생 (만 66세)" },
+        { year: 1948, age: 78, label: "1948년생 (만 78세)" }
+      ],
+      displayYears: "08·96·84·72·60년"
+    },
+    {
+      key: "ox", name: "소띠", icon: "🐮",
+      years: [
+        { year: 2009, age: 17, label: "2009년생 (만 17세)" },
+        { year: 1997, age: 29, label: "1997년생 (만 29세)" },
+        { year: 1985, age: 41, label: "1985년생 (만 41세)" },
+        { year: 1973, age: 53, label: "1973년생 (만 53세)" },
+        { year: 1961, age: 65, label: "1961년생 (만 65세)" },
+        { year: 1949, age: 77, label: "1949년생 (만 77세)" }
+      ],
+      displayYears: "09·97·85·73·61년"
+    },
+    {
+      key: "tiger", name: "호랑이띠", icon: "🐯",
+      years: [
+        { year: 2010, age: 16, label: "2010년생 (만 16세)" },
+        { year: 1998, age: 28, label: "1998년생 (만 28세)" },
+        { year: 1986, age: 40, label: "1986년생 (만 40세)" },
+        { year: 1974, age: 52, label: "1974년생 (만 52세)" },
+        { year: 1962, age: 64, label: "1962년생 (만 64세)" },
+        { year: 1950, age: 76, label: "1950년생 (만 76세)" }
+      ],
+      displayYears: "10·98·86·74·62년"
+    },
+    {
+      key: "rabbit", name: "토끼띠", icon: "🐰",
+      years: [
+        { year: 2011, age: 15, label: "2011년생 (만 15세)" },
+        { year: 1999, age: 27, label: "1999년생 (만 27세)" },
+        { year: 1987, age: 39, label: "1987년생 (만 39세)" },
+        { year: 1975, age: 51, label: "1975년생 (만 51세)" },
+        { year: 1963, age: 63, label: "1963년생 (만 63세)" },
+        { year: 1951, age: 75, label: "1951년생 (만 75세)" }
+      ],
+      displayYears: "11·99·87·75·63년"
+    },
+    {
+      key: "dragon", name: "용띠", icon: "🐲",
+      years: [
+        { year: 2012, age: 14, label: "2012년생 (만 14세)" },
+        { year: 2000, age: 26, label: "2000년생 (만 26세)" },
+        { year: 1988, age: 38, label: "1988년생 (만 38세)" },
+        { year: 1976, age: 50, label: "1976년생 (만 50세)" },
+        { year: 1964, age: 62, label: "1964년생 (만 62세)" },
+        { year: 1952, age: 74, label: "1952년생 (만 74세)" }
+      ],
+      displayYears: "12·00·88·76·64년"
+    },
+    {
+      key: "snake", name: "뱀띠", icon: "🐍",
+      years: [
+        { year: 2013, age: 13, label: "2013년생 (만 13세)" },
+        { year: 2001, age: 25, label: "2001년생 (만 25세)" },
+        { year: 1989, age: 37, label: "1989년생 (만 37세)" },
+        { year: 1977, age: 49, label: "1977년생 (만 49세)" },
+        { year: 1965, age: 61, label: "1965년생 (만 61세)" },
+        { year: 1953, age: 73, label: "1953년생 (만 73세)" }
+      ],
+      displayYears: "13·01·89·77·65년"
+    },
+    {
+      key: "horse", name: "말띠", icon: "🐴",
+      years: [
+        { year: 2014, age: 12, label: "2014년생 (만 12세)" },
+        { year: 2002, age: 24, label: "2002년생 (만 24세)" },
+        { year: 1990, age: 36, label: "1990년생 (만 36세)" },
+        { year: 1978, age: 48, label: "1978년생 (만 48세)" },
+        { year: 1966, age: 60, label: "1966년생 (만 60세)" },
+        { year: 1954, age: 72, label: "1954년생 (만 72세)" }
+      ],
+      displayYears: "14·02·90·78·66년"
+    },
+    {
+      key: "sheep", name: "양띠", icon: "🐑",
+      years: [
+        { year: 2015, age: 11, label: "2015년생 (만 11세)" },
+        { year: 2003, age: 23, label: "2003년생 (만 23세)" },
+        { year: 1991, age: 35, label: "1991년생 (만 35세)" },
+        { year: 1979, age: 47, label: "1979년생 (만 47세)" },
+        { year: 1967, age: 59, label: "1967년생 (만 59세)" },
+        { year: 1955, age: 71, label: "1955년생 (만 71세)" }
+      ],
+      displayYears: "15·03·91·79·67년"
+    },
+    {
+      key: "monkey", name: "원숭이띠", icon: "🐵",
+      years: [
+        { year: 2016, age: 10, label: "2016년생 (만 10세)" },
+        { year: 2004, age: 22, label: "2004년생 (만 22세)" },
+        { year: 1992, age: 34, label: "1992년생 (만 34세)" },
+        { year: 1980, age: 46, label: "1980년생 (만 46세)" },
+        { year: 1968, age: 58, label: "1968년생 (만 58세)" },
+        { year: 1956, age: 70, label: "1956년생 (만 70세)" }
+      ],
+      displayYears: "16·04·92·80·68년"
+    },
+    {
+      key: "rooster", name: "닭띠", icon: "🐔",
+      years: [
+        { year: 2017, age: 9, label: "2017년생 (만 9세)" },
+        { year: 2005, age: 21, label: "2005년생 (만 21세)" },
+        { year: 1993, age: 33, label: "1993년생 (만 33세)" },
+        { year: 1981, age: 45, label: "1981년생 (만 45세)" },
+        { year: 1969, age: 57, label: "1969년생 (만 57세)" },
+        { year: 1957, age: 69, label: "1957년생 (만 69세)" }
+      ],
+      displayYears: "17·05·93·81·69년"
+    },
+    {
+      key: "dog", name: "개띠", icon: "🐶",
+      years: [
+        { year: 2018, age: 8, label: "2018년생 (만 8세)" },
+        { year: 2006, age: 20, label: "2006년생 (만 20세)" },
+        { year: 1994, age: 32, label: "1994년생 (만 32세)" },
+        { year: 1982, age: 44, label: "1982년생 (만 44세)" },
+        { year: 1970, age: 56, label: "1970년생 (만 56세)" },
+        { year: 1958, age: 68, label: "1958년생 (만 68세)" }
+      ],
+      displayYears: "18·06·94·82·70년"
+    },
+    {
+      key: "pig", name: "돼지띠", icon: "🐷",
+      years: [
+        { year: 2019, age: 7, label: "2019년생 (만 7세)" },
+        { year: 2007, age: 19, label: "2007년생 (만 19세)" },
+        { year: 1995, age: 31, label: "1995년생 (만 31세)" },
+        { year: 1983, age: 43, label: "1983년생 (만 43세)" },
+        { year: 1971, age: 55, label: "1971년생 (만 55세)" },
+        { year: 1959, age: 67, label: "1959년생 (만 67세)" }
+      ],
+      displayYears: "19·07·95·83·71년"
+    }
   ];
 
   // 띠별 운세 전용 흐름 문구 (32개)
@@ -1659,36 +1791,68 @@
 
     if (!selectorContainer || !detailCard) return;
 
-    // 사용자 즐겨찾기 띠가 있으면 우선 선택
-    const prefs = getUserPrefs();
-    const defaultKey = prefs.favoriteZodiac || 'rat';
+    // 저장된 출생연도 및 띠 확인 (지속 기억)
+    const storedBirth = localStorage.getItem('fortune_user_birth') || '';
+    let savedYear = parseInt(localStorage.getItem('fortune_user_zodiac_year') || '', 10);
+    const savedZodiac = localStorage.getItem('fortune_user_zodiac') || '';
 
-    selectorContainer.innerHTML = '';
-    let targetIndex = 0;
+    // 만약 생년월일(YYYY-MM-DD)이 있다면 해당 연도로 초기 띠/연도 계산
+    let birthYear = 0;
+    if (storedBirth && storedBirth.length >= 4) {
+      birthYear = parseInt(storedBirth.split('-')[0], 10);
+    }
 
-    ZODIAC_LIST.forEach((item, index) => {
-      const isSelected = item.key === defaultKey;
-      if (isSelected) targetIndex = index;
+    // 우선순위: 저장된 zodiac_year -> 생년월일의 year -> 기본값 1996
+    const effectiveYear = savedYear || birthYear || 1996;
+    const calcZodiacIdx = ((effectiveYear - 4) % 12 + 12) % 12;
+    const calculatedZodiacKey = ZODIAC_LIST[calcZodiacIdx] ? ZODIAC_LIST[calcZodiacIdx].key : 'rat';
 
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `select-btn ${isSelected ? 'active' : ''}`;
-      btn.setAttribute('data-key', item.key);
-      btn.innerHTML = `
-        <span class="btn-icon">${item.icon}</span>
-        <span class="btn-label">${item.name}</span>
-        <span class="btn-sub">${item.years.split(',')[3] || ''}</span>
-      `;
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#zodiac-selector .select-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderZodiacDetail(item);
+    // 띠 결정: 저장된 zodiac -> 계산된 띠 -> rat
+    let currentZodiacKey = savedZodiac || calculatedZodiacKey;
+    let currentItem = ZODIAC_LIST.find(z => z.key === currentZodiacKey) || ZODIAC_LIST[0];
+
+    // 선택된 띠 내에서 선택된 연도 유효성 검사
+    let currentYearObj = currentItem.years.find(y => y.year === effectiveYear);
+    if (!currentYearObj) {
+      currentYearObj = currentItem.years[1] || currentItem.years[0]; // 기본 중간 연도
+    }
+
+    function renderSelector() {
+      selectorContainer.innerHTML = '';
+      ZODIAC_LIST.forEach((item) => {
+        const isSelected = item.key === currentItem.key;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `select-btn ${isSelected ? 'active' : ''}`;
+        btn.setAttribute('data-key', item.key);
+        btn.innerHTML = `
+          <span class="btn-icon">${item.icon}</span>
+          <span class="btn-label">${item.name}</span>
+          <span class="btn-sub">${item.displayYears || ''}</span>
+        `;
+        btn.addEventListener('click', () => {
+          currentItem = item;
+          // 이 띠의 기본 연도로 설정 (기존 선택 연도가 이 띠에 없으면 2번째 기본값)
+          const matched = item.years.find(y => y.year === currentYearObj.year);
+          if (matched) {
+            currentYearObj = matched;
+          } else {
+            currentYearObj = item.years[1] || item.years[0];
+          }
+          localStorage.setItem('fortune_user_zodiac', currentItem.key);
+          localStorage.setItem('fortune_user_zodiac_year', currentYearObj.year);
+
+          document.querySelectorAll('#zodiac-selector .select-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderZodiacDetail();
+        });
+        selectorContainer.appendChild(btn);
       });
-      selectorContainer.appendChild(btn);
-    });
+    }
 
-    function renderZodiacDetail(item) {
-      const rng = getRng(`zodiac_${item.key}`);
+    function renderZodiacDetail() {
+      const year = currentYearObj.year;
+      const rng = getRng(`zodiac_${currentItem.key}_${year}`);
       const flow = pickItem(ZODIAC_FLOW_FORTUNES, rng);
       const love = pickItem(LOVE_FORTUNES, rng);
       const money = pickItem(MONEY_FORTUNES, rng);
@@ -1698,33 +1862,49 @@
       const number = Math.floor(rng() * 99) + 1;
       const quote = pickItem(QUOTE_FORTUNES, rng);
 
+      // 연령 선택 알약 칩 생성
+      const yearPillsHtml = currentItem.years.map(y => {
+        const isActive = y.year === currentYearObj.year;
+        return `<button type="button" class="year-pill ${isActive ? 'active' : ''}" data-year="${y.year}">${y.label}</button>`;
+      }).join('');
+
       detailCard.innerHTML = `
         <div class="result-header">
           <div class="result-target-title">
-            <span>${item.icon}</span> ${item.name} 오늘의 운세
+            <span>${currentItem.icon}</span> ${currentItem.name} <span class="age-badge-tag">${currentYearObj.year}년생 · 만 ${currentYearObj.age}세</span>
           </div>
           <div class="result-date-chip js-today-date"></div>
         </div>
 
+        <div class="zodiac-year-selector-wrap">
+          <div class="year-selector-label">
+            <span>🎯</span> <strong>출생연도(나이) 선택</strong>: 같은 ${currentItem.name}라도 연령별 맞춤 운세가 적용됩니다.
+            <span class="label-sub">선택 시 자동 기억</span>
+          </div>
+          <div class="year-pill-group">
+            ${yearPillsHtml}
+          </div>
+        </div>
+
         <div class="result-sections">
           <div class="result-row highlight">
-            <span class="row-label"><span class="row-icon">🌊</span> 오늘의 흐름</span>
+            <span class="row-label"><span class="row-icon">🌊</span> ${currentYearObj.year}년생 오늘의 흐름</span>
             <p class="row-content">${flow}</p>
           </div>
           <div class="result-row">
-            <span class="row-label"><span class="row-icon">💖</span> 연애운</span>
+            <span class="row-label"><span class="row-icon">💖</span> 연애 / 대인관계운</span>
             <p class="row-content">${love}</p>
           </div>
           <div class="result-row">
-            <span class="row-label"><span class="row-icon">💰</span> 금전운</span>
+            <span class="row-label"><span class="row-icon">💰</span> 재물 / 금전운</span>
             <p class="row-content">${money}</p>
           </div>
           <div class="result-row">
-            <span class="row-label"><span class="row-icon">💼</span> 일 / 공부운</span>
+            <span class="row-label"><span class="row-icon">💼</span> 일 / 학업 / 진로운</span>
             <p class="row-content">${work}</p>
           </div>
           <div class="result-row">
-            <span class="row-label"><span class="row-icon">⚠️</span> 조심할 점</span>
+            <span class="row-label"><span class="row-icon">⚠️</span> 오늘의 주의사항</span>
             <p class="row-content">${caution}</p>
           </div>
         </div>
@@ -1751,10 +1931,25 @@
         </div>
       `;
 
+      // 연도 선택 칩 이벤트 바인딩
+      detailCard.querySelectorAll('.year-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          const selectedYearNum = parseInt(pill.getAttribute('data-year'), 10);
+          const found = currentItem.years.find(y => y.year === selectedYearNum);
+          if (found) {
+            currentYearObj = found;
+            localStorage.setItem('fortune_user_zodiac_year', currentYearObj.year);
+            localStorage.setItem('fortune_user_zodiac', currentItem.key);
+            renderZodiacDetail();
+          }
+        });
+      });
+
       initCommonLayout();
     }
 
-    renderZodiacDetail(ZODIAC_LIST[targetIndex]);
+    renderSelector();
+    renderZodiacDetail();
 
     if (toggleAllBtn && allListContainer) {
       toggleAllBtn.addEventListener('click', () => {
@@ -1779,7 +1974,7 @@
         const card = document.createElement('div');
         card.className = 'mini-fortune-card';
         card.innerHTML = `
-          <h4>${item.icon} ${item.name} (${item.years})</h4>
+          <h4>${item.icon} ${item.name} (${item.displayYears || ''})</h4>
           <p style="margin-bottom: 6px;">${flow}</p>
           <p style="font-size: 12.5px; color: var(--main-color);">조언: “${quote}”</p>
         `;
@@ -1903,18 +2098,28 @@
     const redrawBtn = document.getElementById('btn-tarot-redraw');
     const detailContainer = document.getElementById('tarot-result-wrap');
     let isFlipping = false;
+    let hasDrawn = false;
 
     if (!deckContainer || !drawBtn || !detailContainer) return;
 
     function setupDeck() {
+      isFlipping = false;
+      hasDrawn = false;
       deckContainer.innerHTML = '';
+
       for (let i = 0; i < 3; i++) {
         const slot = document.createElement('div');
         slot.className = 'tarot-card-slot';
         slot.setAttribute('data-idx', i);
+        slot.setAttribute('role', 'button');
+        slot.setAttribute('tabindex', '0');
+        slot.setAttribute('aria-label', `타로 카드 ${i + 1}`);
         slot.innerHTML = `
           <div class="tarot-card-inner">
-            <div class="tarot-back"></div>
+            <div class="tarot-back">
+              <div class="tarot-back-star">✦</div>
+              <div class="tarot-back-footer">FORTUNE TAROT</div>
+            </div>
             <div class="tarot-front">
               <span class="front-num">No.</span>
               <span class="front-icon">🔮</span>
@@ -1922,8 +2127,9 @@
             </div>
           </div>
         `;
+
         slot.addEventListener('click', () => {
-          if (!isFlipping) {
+          if (!isFlipping && !hasDrawn) {
             pickTarotCard(slot);
           }
         });
@@ -1932,32 +2138,42 @@
     }
 
     function pickTarotCard(targetSlot) {
+      if (hasDrawn || isFlipping) return;
+      hasDrawn = true;
       isFlipping = true;
+
+      // 22장 메이저 아르카나 중 랜덤 카드 1장 선택
       const randomIdx = Math.floor(Math.random() * TAROT_CARDS.length);
       const card = TAROT_CARDS[randomIdx];
 
-      const slot = targetSlot || document.querySelector('.tarot-card-slot');
+      const slot = targetSlot || deckContainer.querySelector('.tarot-card-slot');
       if (slot) {
         const numEl = slot.querySelector('.front-num');
         const iconEl = slot.querySelector('.front-icon');
         const nameEl = slot.querySelector('.front-name');
-        if (numEl) numEl.textContent = `No. ${card.number}`;
+        if (numEl) numEl.textContent = `✦ No. ${card.number} ✦`;
         if (iconEl) iconEl.textContent = card.icon;
         if (nameEl) nameEl.textContent = card.koName;
 
-        document.querySelectorAll('.tarot-card-slot').forEach(s => {
-          if (s !== slot) s.style.opacity = '0.35';
+        // 선택된 카드는 3D 뒤집힘 및 황금빛 강조, 나머지 2장은 흐리게 처리 & 클릭 차단
+        deckContainer.querySelectorAll('.tarot-card-slot').forEach(s => {
+          if (s === slot) {
+            s.classList.add('selected');
+          } else {
+            s.classList.add('unselected');
+          }
         });
-        slot.classList.add('flipped');
       }
+
+      // 뽑기 버튼 즉시 숨김
+      if (drawBtn) drawBtn.style.display = 'none';
 
       setTimeout(() => {
         renderTarotDetail(card);
         isFlipping = false;
-        drawBtn.style.display = 'none';
         detailContainer.classList.add('show');
         detailContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 700);
+      }, 750);
     }
 
     function renderTarotDetail(card) {
@@ -2004,8 +2220,8 @@
     }
 
     drawBtn.addEventListener('click', () => {
-      if (!isFlipping) {
-        const firstSlot = document.querySelector('.tarot-card-slot');
+      if (!isFlipping && !hasDrawn) {
+        const firstSlot = deckContainer.querySelector('.tarot-card-slot');
         pickTarotCard(firstSlot);
       }
     });
@@ -2013,7 +2229,7 @@
     if (redrawBtn) {
       redrawBtn.addEventListener('click', () => {
         detailContainer.classList.remove('show');
-        drawBtn.style.display = 'inline-flex';
+        if (drawBtn) drawBtn.style.display = 'inline-flex';
         setupDeck();
         window.scrollTo({ top: 120, behavior: 'smooth' });
       });
