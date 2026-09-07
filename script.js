@@ -82,6 +82,10 @@
     return `${year}-${month}-${day}`;
   }
 
+  function getTodayDateString() {
+    return getTodayKey();
+  }
+
   function mulberry32(seed) {
     return function () {
       let t = (seed += 0x6d2b79f5);
@@ -1530,68 +1534,73 @@
 
     // 운세 렌더링 함수 (입력값 시드 기반)
     function renderPersonalFortune(birth, calendar, gender, focus) {
-      const seed = `today_${getTodayDateString()}_${birth}_${calendar}_${gender}_${focus}`;
-      const rng = getRng(seed);
+      try {
+        const dateStr = typeof getTodayKey === 'function' ? getTodayKey() : new Date().toISOString().slice(0, 10);
+        const seed = `today_${dateStr}_${birth}_${calendar}_${gender}_${focus}`;
+        const rng = getRng(seed);
 
-      const keyword = pickItem(FORTUNE_KEYWORDS, rng);
-      const general = pickItem(GENERAL_FORTUNES, rng);
-      const love = pickItem(LOVE_FORTUNES, rng);
-      const money = pickItem(MONEY_FORTUNES, rng);
-      const work = pickItem(WORK_FORTUNES, rng);
-      const caution = pickItem(CAUTION_FORTUNES, rng);
-      const action = pickItem(ACTION_FORTUNES, rng);
-      const quote = pickItem(QUOTE_FORTUNES, rng);
-      const color = pickItem(LUCKY_COLORS, rng);
-      const luckyNumber = Math.floor(rng() * 99) + 1;
+        const keyword = pickItem(FORTUNE_KEYWORDS, rng);
+        const general = pickItem(GENERAL_FORTUNES, rng);
+        const love = pickItem(LOVE_FORTUNES, rng);
+        const money = pickItem(MONEY_FORTUNES, rng);
+        const work = pickItem(WORK_FORTUNES, rng);
+        const caution = pickItem(CAUTION_FORTUNES, rng);
+        const action = pickItem(ACTION_FORTUNES, rng);
+        const quote = pickItem(QUOTE_FORTUNES, rng);
+        const color = pickItem(LUCKY_COLORS, rng);
+        const luckyNumber = Math.floor(rng() * 99) + 1;
 
-      const elKeyword = document.getElementById('tf-keyword');
-      const elGeneral = document.getElementById('tf-general');
-      const elLove = document.getElementById('tf-love');
-      const elMoney = document.getElementById('tf-money');
-      const elWork = document.getElementById('tf-work');
-      const elCaution = document.getElementById('tf-caution');
-      const elAction = document.getElementById('tf-action');
-      const elQuote = document.getElementById('tf-quote');
-      const elColorName = document.getElementById('tf-color-name');
-      const elColorDot = document.getElementById('tf-color-dot');
-      const elNumber = document.getElementById('tf-number');
+        const elKeyword = document.getElementById('tf-keyword');
+        const elGeneral = document.getElementById('tf-general');
+        const elLove = document.getElementById('tf-love');
+        const elMoney = document.getElementById('tf-money');
+        const elWork = document.getElementById('tf-work');
+        const elCaution = document.getElementById('tf-caution');
+        const elAction = document.getElementById('tf-action');
+        const elQuote = document.getElementById('tf-quote');
+        const elColorName = document.getElementById('tf-color-name');
+        const elColorDot = document.getElementById('tf-color-dot');
+        const elNumber = document.getElementById('tf-number');
 
-      if (elKeyword) elKeyword.textContent = keyword;
-      if (elGeneral) elGeneral.textContent = general;
-      if (elLove) elLove.textContent = love;
-      if (elMoney) elMoney.textContent = money;
-      if (elWork) elWork.textContent = work;
-      if (elCaution) elCaution.textContent = caution;
-      if (elAction) elAction.textContent = action;
-      if (elQuote) elQuote.textContent = `“${quote}”`;
-      if (elColorName) elColorName.textContent = color.name;
-      if (elColorDot) elColorDot.style.backgroundColor = color.code;
-      if (elNumber) elNumber.textContent = luckyNumber;
+        if (elKeyword) elKeyword.textContent = keyword;
+        if (elGeneral) elGeneral.textContent = general;
+        if (elLove) elLove.textContent = love;
+        if (elMoney) elMoney.textContent = money;
+        if (elWork) elWork.textContent = work;
+        if (elCaution) elCaution.textContent = caution;
+        if (elAction) elAction.textContent = action;
+        if (elQuote) elQuote.textContent = `“${quote}”`;
+        if (elColorName && color) elColorName.textContent = color.name || '';
+        if (elColorDot && color) elColorDot.style.backgroundColor = color.code || '#6D28D9';
+        if (elNumber) elNumber.textContent = luckyNumber;
 
-      // 관심사 뱃지 표기
-      if (focusBadge) {
-        const focusNames = {
-          'all': '🌟 오늘의 집중: 종합 총운',
-          'love': '💖 오늘의 집중: 연애·인간관계',
-          'money': '💰 오늘의 집중: 금전·재물운',
-          'work': '💼 오늘의 집중: 직장·학업운'
-        };
-        focusBadge.textContent = focusNames[focus] || focusNames['all'];
-        focusBadge.style.display = 'inline-flex';
+        // 관심사 뱃지 표기
+        if (focusBadge) {
+          const focusNames = {
+            'all': '🌟 오늘의 집중: 종합 총운',
+            'love': '💖 오늘의 집중: 연애·인간관계',
+            'money': '💰 오늘의 집중: 금전·재물운',
+            'work': '💼 오늘의 집중: 직장·학업운'
+          };
+          focusBadge.textContent = focusNames[focus] || focusNames['all'];
+          focusBadge.style.display = 'inline-flex';
+        }
+
+        // 특정 영역 하이라이트 조정
+        const rowLove = elLove ? elLove.closest('.result-row') : null;
+        const rowMoney = elMoney ? elMoney.closest('.result-row') : null;
+        const rowWork = elWork ? elWork.closest('.result-row') : null;
+        const rowGeneral = elGeneral ? elGeneral.closest('.result-row') : null;
+
+        [rowGeneral, rowLove, rowMoney, rowWork].forEach(r => r && r.classList.remove('highlight'));
+
+        if (focus === 'love' && rowLove) rowLove.classList.add('highlight');
+        else if (focus === 'money' && rowMoney) rowMoney.classList.add('highlight');
+        else if (focus === 'work' && rowWork) rowWork.classList.add('highlight');
+        else if (rowGeneral) rowGeneral.classList.add('highlight');
+      } catch (err) {
+        console.error("renderPersonalFortune error:", err);
       }
-
-      // 특정 영역 하이라이트 조정
-      const rowLove = elLove ? elLove.closest('.result-row') : null;
-      const rowMoney = elMoney ? elMoney.closest('.result-row') : null;
-      const rowWork = elWork ? elWork.closest('.result-row') : null;
-      const rowGeneral = elGeneral ? elGeneral.closest('.result-row') : null;
-
-      [rowGeneral, rowLove, rowMoney, rowWork].forEach(r => r && r.classList.remove('highlight'));
-
-      if (focus === 'love' && rowLove) rowLove.classList.add('highlight');
-      else if (focus === 'money' && rowMoney) rowMoney.classList.add('highlight');
-      else if (focus === 'work' && rowWork) rowWork.classList.add('highlight');
-      else if (rowGeneral) rowGeneral.classList.add('highlight');
     }
 
     // [오늘의 맞춤 운세 확인하기] 버튼 클릭
@@ -1609,16 +1618,20 @@
         btnReveal.disabled = true;
 
         setTimeout(() => {
-          renderPersonalFortune(birth, calendar, currentGender, currentFocus);
-          btnReveal.textContent = '🔮 오늘의 맞춤 운세 확인하기';
-          btnReveal.disabled = false;
-
-          if (resultCard) {
-            resultCard.style.display = 'block';
-            resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          try {
+            renderPersonalFortune(birth, calendar, currentGender, currentFocus);
+            if (resultCard) {
+              resultCard.style.display = 'block';
+              resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            showToast("나만을 위한 오늘의 맞춤 운세가 완성되었습니다! ✨");
+          } catch (e) {
+            console.error("reveal click error:", e);
+          } finally {
+            btnReveal.textContent = '🔮 오늘의 맞춤 운세 확인하기';
+            btnReveal.disabled = false;
           }
-          showToast("나만을 위한 오늘의 맞춤 운세가 완성되었습니다! ✨");
-        }, 500);
+        }, 400);
       });
     }
 
