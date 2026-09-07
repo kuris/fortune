@@ -302,28 +302,18 @@ button {
 }
 
 /* ==========================================================================
-   광고 플레이스홀더 (.ad-placeholder)
+   애드센스 광고 슬롯 (.ad-slot) - 마인드테스트 방식 클린 슬롯
    ========================================================================== */
+.ad-slot,
 .ad-placeholder {
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px dashed #D1D5DB;
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  text-align: center;
-  color: var(--text-light);
-  font-size: 12px;
   margin: 20px 0;
-  min-height: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
+  min-height: 1px;
+  text-align: center;
+  clear: both;
 }
 
-.ad-placeholder.compact {
-  padding: 10px;
-  min-height: 50px;
+.ad-placeholder span {
+  display: none;
 }
 
 /* ==========================================================================
