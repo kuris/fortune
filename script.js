@@ -11,17 +11,47 @@
   // =========================================================================
   const SUPABASE_URL = 'https://ybhiznlelnpwaicyoifa.supabase.co';
   const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_H4gFRiLEjE8h8s_EX4tKzg__ZKpsBR1';
+  const SUPABASE_SCHEMA = 'fortune';
   let sbClient = null;
   let currentUser = null;
+
+  // ---------- 콜백 & 리디렉션 주소 관리 (운세/한자/보카 분리) ----------
+  function getFortuneRedirectUrl() {
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      return location.origin + '/login.html';
+    }
+    // Vercel 배포 프리뷰 환경인 경우 해당 origin 유지
+    if (location.hostname.endsWith('vercel.app')) {
+      return location.origin + '/login.html';
+    }
+    return 'https://fortune.chatgpts.kr/login.html';
+  }
+
+  // 로그인 후 브라우저 주소창의 지저분한 hash(#access_token=...) 또는 code= 파라미터를 깨끗하게 정리
+  function cleanCallbackUrl() {
+    try {
+      if (window.location.hash && (window.location.hash.includes('access_token=') || window.location.hash.includes('refresh_token=') || window.location.hash.includes('error='))) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      if (window.location.search && window.location.search.includes('code=')) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('code');
+        const qs = url.searchParams.toString();
+        window.history.replaceState(null, '', url.pathname + (qs ? '?' + qs : '') + url.hash);
+      }
+    } catch (e) {}
+  }
 
   function initSupabase() {
     if (window.supabase && typeof window.supabase.createClient === 'function') {
       try {
         sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+          db: { schema: SUPABASE_SCHEMA },
           auth: {
             persistSession: true,
             autoRefreshToken: true,
-            detectSessionInUrl: true
+            detectSessionInUrl: true,
+            storageKey: 'sb-fortune-auth-token'
           }
         });
       } catch (err) {
@@ -1311,6 +1341,7 @@
   // 5. 공통 헤더 & 인증 상태 관리
   // =========================================================================
   async function checkAuthSession() {
+    cleanCallbackUrl();
     if (!sbClient) return;
 
     try {
@@ -1327,6 +1358,7 @@
     }
 
     sbClient.auth.onAuthStateChange((event, session) => {
+      cleanCallbackUrl();
       currentUser = session ? session.user : null;
       updateHeaderAuth(currentUser);
       if (document.getElementById('guest-auth-section') || window.location.pathname.includes('/login')) {
@@ -1982,7 +2014,7 @@
           return;
         }
         try {
-          const redirectUrl = window.location.origin + '/login.html';
+          const redirectUrl = getFortuneRedirectUrl();
           const { error } = await sbClient.auth.signInWithOAuth({
             provider: 'google',
             options: { redirectTo: redirectUrl }
