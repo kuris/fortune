@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내 운세함 & 로그인 - 운세야 놀자</title>
+  <meta name="description" content="로그인하고 내가 뽑은 타로와 오늘의 운세를 내 운세함에 보관해보세요. 내 띠와 별자리도 편하게 저장할 수 있습니다.">
+  <link rel="canonical" href="https://fortune.chatgpts.kr/login.html">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="운세야 놀자">
+  <meta property="og:title" content="내 운세함 & 로그인 - 운세야 놀자">
+  <meta property="og:description" content="내가 뽑은 타로와 오늘의 운세를 내 운세함에 보관해보세요.">
+  <meta property="og:url" content="https://fortune.chatgpts.kr/login.html">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%94%AE%3C%2Ftext%3E%3C%2Fsvg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321070604000141" crossorigin="anonymous"></script>
+
+  <!-- Vercel Analytics -->
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="wrap">
+    <!-- 헤더 -->
+    <header class="site-head">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🔮</span>
+        <span>운세야 <span class="dot">놀자</span></span>
+      </a>
+      <div class="header-right">
+        <a href="login.html" class="family-btn active" id="header-auth-btn">
+          <span id="auth-status-icon">👤</span> <span id="auth-status-text">내 운세함</span>
+        </a>
+        <div class="family-nav-wrap">
+          <button type="button" class="family-btn" id="family-btn">
+            다른 놀자 서비스 ▾
+          </button>
+          <div class="family-dropdown" id="family-dropdown">
+            <a href="https://mindtest.chatgpts.kr" target="_blank" rel="noopener">🧠 마인드테스트</a>
+            <a href="https://hanja.chatgpts.kr" target="_blank" rel="noopener">📖 한자야 놀자</a>
+            <a href="https://voca.chatgpts.kr" target="_blank" rel="noopener">⚡ 단어야 놀자</a>
+            <a href="https://chatgpts.kr" target="_blank" rel="noopener">🏠 chatgpts.kr</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 상단 스크롤 메뉴 -->
+    <nav class="nav-scroll" aria-label="메인 메뉴">
+      <a href="index.html" class="nav-chip">🏠 홈</a>
+      <a href="today.html" class="nav-chip">☀️ 오늘의 운세</a>
+      <a href="zodiac.html" class="nav-chip">🐭 띠별 운세</a>
+      <a href="star.html" class="nav-chip">⭐ 별자리 운세</a>
+      <a href="tarot.html" class="nav-chip">🃏 오늘의 타로</a>
+      <a href="love.html" class="nav-chip">💘 연애운</a>
+      <a href="login.html" class="nav-chip active">📂 내 운세함</a>
+    </nav>
+
+    <!-- 1. 비로그인 상태 뷰 -->
+    <section id="guest-auth-section" style="display: none;">
+      <div class="page-header">
+        <h1 class="page-title">🔮 내 운세함 로그인</h1>
+        <p class="page-desc">로그인하고 오늘 본 운세와 타로 카드를 나만의 운세함에 간직해보세요.</p>
+      </div>
+
+      <!-- 로그인 안내 카드 -->
+      <div class="fortune-result-card" style="margin-bottom: 20px;">
+        <h3 style="font-family: var(--font-display); font-size: 17px; color: var(--main-color); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+          <span>✨</span> 로그인하면 무엇이 좋아지나요?
+        </h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--text-main);">
+          <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <span>📌</span>
+            <div><strong>오늘 본 운세 & 타로 저장:</strong> 감명 깊었던 운세와 타로 결과를 내 보관함에 저장할 수 있습니다.</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <span>⭐</span>
+            <div><strong>내 띠 & 별자리 즐겨찾기:</strong> 매번 찾을 필요 없이 내 띠와 별자리를 저장해 바로 확인하세요.</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <span>🤝</span>
+            <div><strong>놀자 패밀리 통합:</strong> 한자야 놀자, 마인드테스트와 같은 계정으로 편하게 이용할 수 있습니다.</div>
+          </div>
+        </div>
+
+        <p style="font-size: 12.5px; color: var(--text-light); margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 10px;">
+          ※ 로그인하지 않아도 모든 운세와 타로 보기는 100% 무료로 자유롭게 이용하실 수 있습니다.
+        </p>
+      </div>
+
+      <!-- 구글 로그인 버튼 -->
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+        <button type="button" class="btn-primary" id="btn-google-login" style="background: #FFFFFF; color: #1F2937; border: 1px solid #D1D5DB; box-shadow: var(--shadow-sm); font-size: 15px; padding: 14px 20px;">
+          <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink:0;">
+            <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9.1h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.2 5.6c4.2-3.9 6.6-9.6 6.6-17z"/>
+            <path fill="#FBBC05" d="M10.5 28.6c-.5-1.4-.8-2.9-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C1 16.3 0 20 0 24s1 7.7 2.6 10.8l7.9-6.2z"/>
+            <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.2-5.6c-2 1.4-4.6 2.2-8.7 2.2-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/>
+          </svg>
+          Google 계정으로 계속하기
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. 로그인 완료 상태 뷰 (내 운세함 대시보드) -->
+    <section id="user-dashboard-section" style="display: none;">
+      <div class="page-header">
+        <h1 class="page-title">📂 <span id="user-display-name">나</span>의 운세함</h1>
+        <p class="page-desc">내가 저장한 운세 기록과 즐겨찾는 띠·별자리를 관리하세요.</p>
+      </div>
+
+      <!-- 내 프로필 & 내 띠/별자리 설정 카드 -->
+      <div class="fortune-result-card" style="margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <span style="font-size: 13px; color: var(--text-light);">로그인된 계정</span>
+            <div style="font-family: var(--font-display); font-size: 16px; color: var(--main-color);" id="user-display-email">user@email.com</div>
+          </div>
+          <button type="button" class="family-btn" id="btn-logout" style="color: #DC2626; border-color: #FCA5A5;">
+            로그아웃
+          </button>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid var(--border-subtle); margin-bottom: 16px;">
+
+        <h3 style="font-family: var(--font-display); font-size: 16px; color: var(--text-main); margin-bottom: 10px;">
+          ⭐ 나의 즐겨찾기 설정
+        </h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+          내 띠와 별자리를 설정해두시면 다음 방문 시 더욱 편리합니다.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">나의 띠</label>
+            <select id="user-favorite-zodiac" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-family: inherit; font-size: 14px; background: #fff;">
+              <option value="">선택 안 함</option>
+              <option value="rat">🐭 쥐띠</option>
+              <option value="ox">🐮 소띠</option>
+              <option value="tiger">🐯 호랑이띠</option>
+              <option value="rabbit">🐰 토끼띠</option>
+              <option value="dragon">🐲 용띠</option>
+              <option value="snake">🐍 뱀띠</option>
+              <option value="horse">🐴 말띠</option>
+              <option value="sheep">🐑 양띠</option>
+              <option value="monkey">🐵 원숭이띠</option>
+              <option value="rooster">🐔 닭띠</option>
+              <option value="dog">🐶 개띠</option>
+              <option value="pig">🐷 돼지띠</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">나의 별자리</label>
+            <select id="user-favorite-star" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-family: inherit; font-size: 14px; background: #fff;">
+              <option value="">선택 안 함</option>
+              <option value="aries">♈ 양자리</option>
+              <option value="taurus">♉ 황소자리</option>
+              <option value="gemini">♊ 쌍둥이자리</option>
+              <option value="cancer">♋ 게자리</option>
+              <option value="leo">♌ 사자자리</option>
+              <option value="virgo">♍ 처녀자리</option>
+              <option value="libra">♎ 천칭자리</option>
+              <option value="scorpio">♏ 전갈자리</option>
+              <option value="sagittarius">♐ 사수자리</option>
+              <option value="capricorn">♑ 염소자리</option>
+              <option value="aquarius">♒ 물병자리</option>
+              <option value="pisces">♓ 물고기자리</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="btn-secondary" id="btn-save-preferences" style="width: 100%; font-size: 14px; padding: 10px;">
+          설정 저장하기
+        </button>
+      </div>
+
+      <!-- 내 저장 기록 목록 -->
+      <div class="fortune-result-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <h3 style="font-family: var(--font-display); font-size: 17px; color: var(--main-color); display: flex; align-items: center; gap: 6px;">
+            <span>📜</span> 저장된 운세 기록 (<span id="saved-count">0</span>)
+          </h3>
+          <button type="button" id="btn-clear-history" style="font-size: 12px; color: var(--text-light); text-decoration: underline;">
+            기록 비우기
+          </button>
+        </div>
+
+        <div id="saved-history-list" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- 저장된 항목 없을 때 -->
+          <div id="empty-history-msg" style="text-align: center; padding: 30px 10px; color: var(--text-muted); font-size: 14px;">
+            <div style="font-size: 32px; margin-bottom: 8px;">📂</div>
+            아직 저장된 운세 기록이 없습니다.<br>
+            오늘의 운세나 타로를 보고 하단의 [💾 내 운세함에 저장하기]를 눌러보세요!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 광고 영역 -->
+    <div class="ad-placeholder">
+      <span>광고 영역</span>
+    </div>
+
+    <!-- 패밀리 서비스 배너 -->
+    <section class="nolja-family-banner">
+      <h3>놀자 패밀리 서비스 둘러보기</h3>
+      <div class="family-link-chips">
+        <a href="https://mindtest.chatgpts.kr" target="_blank" rel="noopener" class="family-chip-link">🧠 마인드테스트 바로가기</a>
+        <a href="https://hanja.chatgpts.kr" target="_blank" rel="noopener" class="family-chip-link">📖 한자야 놀자 바로가기</a>
+        <a href="https://voca.chatgpts.kr" target="_blank" rel="noopener" class="family-chip-link">⚡ 단어야 놀자 바로가기</a>
+      </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="site-foot">
+      <div class="disclaimer-box">
+        <strong>※ 참고용 콘텐츠 안내</strong>
+        운세야 놀자의 모든 운세 콘텐츠는 재미와 자기성찰을 위한 참고용입니다.
+        실제 미래, 건강, 금전, 법률, 진로, 인간관계를 단정하거나 보장하지 않습니다.
+        중요한 결정은 현실적인 정보와 전문가의 조언을 함께 참고해 주세요.
+      </div>
+      <nav class="footer-nav-links" aria-label="푸터 링크">
+        <a href="index.html">홈</a> ·
+        <a href="today.html">오늘의 운세</a> ·
+        <a href="zodiac.html">띠별 운세</a> ·
+        <a href="star.html">별자리 운세</a> ·
+        <a href="tarot.html">오늘의 타로</a> ·
+        <a href="love.html">연애운</a> ·
+        <a href="login.html">내 운세함</a>
+      </nav>
+      <div class="footer-copy">
+        <p>© 2026 운세야 놀자 (fortune.chatgpts.kr) · All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

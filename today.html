@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 운세 - 운세야 놀자</title>
+  <meta name="description" content="오늘의 총운, 연애운, 금전운, 직장운, 공부운과 행운의 색, 행운의 숫자를 재미로 확인해보세요.">
+  <link rel="canonical" href="https://fortune.chatgpts.kr/today.html">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="운세야 놀자">
+  <meta property="og:title" content="오늘의 운세 - 운세야 놀자">
+  <meta property="og:description" content="오늘의 총운, 연애운, 금전운, 직장운, 공부운과 행운의 색, 행운의 숫자를 재미로 확인해보세요.">
+  <meta property="og:url" content="https://fortune.chatgpts.kr/today.html">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%94%AE%3C%2Ftext%3E%3C%2Fsvg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321070604000141" crossorigin="anonymous"></script>
+
+  <!-- Vercel Analytics -->
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="wrap">
+    <!-- 헤더 -->
+    <header class="site-head">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🔮</span>
+        <span>운세야 <span class="dot">놀자</span></span>
+      </a>
+      <div class="header-right">
+        <a href="login.html" class="family-btn" id="header-auth-btn">
+          <span id="auth-status-icon">👤</span> <span id="auth-status-text">내 운세함</span>
+        </a>
+        <div class="family-nav-wrap">
+          <button type="button" class="family-btn" id="family-btn">
+            다른 놀자 서비스 ▾
+          </button>
+          <div class="family-dropdown" id="family-dropdown">
+            <a href="https://mindtest.chatgpts.kr" target="_blank" rel="noopener">🧠 마인드테스트</a>
+            <a href="https://hanja.chatgpts.kr" target="_blank" rel="noopener">📖 한자야 놀자</a>
+            <a href="https://voca.chatgpts.kr" target="_blank" rel="noopener">⚡ 단어야 놀자</a>
+            <a href="https://chatgpts.kr" target="_blank" rel="noopener">🏠 chatgpts.kr</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 상단 스크롤 메뉴 -->
+    <nav class="nav-scroll" aria-label="메인 메뉴">
+      <a href="index.html" class="nav-chip">🏠 홈</a>
+      <a href="today.html" class="nav-chip active">☀️ 오늘의 운세</a>
+      <a href="zodiac.html" class="nav-chip">🐭 띠별 운세</a>
+      <a href="star.html" class="nav-chip">⭐ 별자리 운세</a>
+      <a href="tarot.html" class="nav-chip">🃏 오늘의 타로</a>
+      <a href="love.html" class="nav-chip">💘 연애운</a>
+      <a href="login.html" class="nav-chip">📂 내 운세함</a>
+    </nav>
+
+    <!-- 페이지 헤더 -->
+    <div class="page-header">
+      <h1 class="page-title">☀️ 오늘의 운세</h1>
+      <p class="page-desc">오늘 날짜를 바탕으로 매일 바뀌는 나의 하루 종합 운세입니다.</p>
+    </div>
+
+    <!-- 상단 광고 영역 -->
+    <div class="ad-placeholder">
+      <span>광고 영역 (상단)</span>
+    </div>
+
+    <!-- 오늘의 운세 결과 카드 -->
+    <main class="fortune-result-card" id="today-result-card">
+      <div class="result-header">
+        <div class="result-target-title">
+          <span>🍀</span> 오늘의 종합 운세
+        </div>
+        <div class="result-date-chip js-today-date"></div>
+      </div>
+
+      <!-- 키워드 -->
+      <div class="keyword-badge-wrap">
+        <span class="keyword-label">오늘의 키워드</span>
+        <span class="keyword-value" id="tf-keyword">정리</span>
+      </div>
+
+      <!-- 상세 섹션 -->
+      <div class="result-sections">
+        <div class="result-row highlight">
+          <span class="row-label"><span class="row-icon">🌟</span> 총운</span>
+          <p class="row-content" id="tf-general">불러오는 중...</p>
+        </div>
+        <div class="result-row">
+          <span class="row-label"><span class="row-icon">💖</span> 연애운</span>
+          <p class="row-content" id="tf-love">불러오는 중...</p>
+        </div>
+        <div class="result-row">
+          <span class="row-label"><span class="row-icon">💰</span> 금전운</span>
+          <p class="row-content" id="tf-money">불러오는 중...</p>
+        </div>
+        <div class="result-row">
+          <span class="row-label"><span class="row-icon">💼</span> 직장운</span>
+          <p class="row-content" id="tf-work">불러오는 중...</p>
+        </div>
+        <div class="result-row">
+          <span class="row-label"><span class="row-icon">📖</span> 공부운</span>
+          <p class="row-content" id="tf-study">핵심 내용을 나만의 언어로 요약 정리할 때 능률이 크게 상승합니다.</p>
+        </div>
+        <div class="result-row">
+          <span class="row-label"><span class="row-icon">⚠️</span> 조심할 점</span>
+          <p class="row-content" id="tf-caution">불러오는 중...</p>
+        </div>
+        <div class="result-row">
+          <span class="row-label"><span class="row-icon">🌱</span> 오늘의 작은 행동</span>
+          <p class="row-content" id="tf-action">불러오는 중...</p>
+        </div>
+      </div>
+
+      <!-- 행운의 요소 -->
+      <div class="lucky-pill-grid">
+        <div class="lucky-pill">
+          <div class="color-dot" id="tf-color-dot" style="background-color: #6D28D9;"></div>
+          <div>
+            <div class="lucky-pill-title">행운의 색</div>
+            <div class="lucky-pill-val" id="tf-color-name">로열 퍼플</div>
+          </div>
+        </div>
+        <div class="lucky-pill">
+          <div style="font-size: 22px;">🍀</div>
+          <div>
+            <div class="lucky-pill-title">행운의 숫자</div>
+            <div class="lucky-pill-val" id="tf-number">7</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오늘의 한마디 -->
+      <div class="advice-quote-box">
+        <p id="tf-quote">“조급함보다 꾸준함이 언제나 더 큰 힘이 됩니다.”</p>
+      </div>
+    </main>
+
+    <!-- 액션 버튼 그룹 -->
+    <div class="action-btn-group">
+      <button type="button" class="btn-primary js-save-btn" data-type="today">
+        💾 내 운세함에 저장하기
+      </button>
+      <button type="button" class="btn-secondary js-share-btn">
+        🔗 결과 공유하기
+      </button>
+      <a href="tarot.html" class="btn-secondary">
+        🃏 타로 카드 뽑기
+      </a>
+      <a href="zodiac.html" class="btn-secondary">
+        🐭 띠별 운세 보기
+      </a>
+    </div>
+
+    <!-- 결과 카드 아래 광고 영역 -->
+    <div class="ad-placeholder">
+      <span>광고 영역 (결과 카드 하단)</span>
+    </div>
+
+    <!-- 관련 콘텐츠 섹션 -->
+    <section class="related-section">
+      <h3 class="section-label">다른 운세도 가볍게 확인해보세요</h3>
+      <div class="related-grid">
+        <a href="zodiac.html" class="related-card">
+          <span class="rc-icon">🐭</span>
+          <div>
+            <div class="rc-title">띠별 오늘의 운세</div>
+            <div class="rc-desc">12가지 띠로 보는 나의 하루</div>
+          </div>
+        </a>
+        <a href="star.html" class="related-card">
+          <span class="rc-icon">⭐</span>
+          <div>
+            <div class="rc-title">별자리 오늘의 운세</div>
+            <div class="rc-desc">12별자리가 전하는 오늘의 분위기</div>
+          </div>
+        </a>
+        <a href="tarot.html" class="related-card">
+          <span class="rc-icon">🃏</span>
+          <div>
+            <div class="rc-title">오늘의 타로</div>
+            <div class="rc-desc">신비로운 카드 1장이 전하는 메시지</div>
+          </div>
+        </a>
+        <a href="love.html" class="related-card">
+          <span class="rc-icon">💘</span>
+          <div>
+            <div class="rc-title">오늘의 연애운</div>
+            <div class="rc-desc">솔로, 썸, 연애중, 이별후 관계 조언</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 하단 패밀리 서비스 배너 -->
+    <section class="nolja-family-banner">
+      <h3>놀자 패밀리 서비스 둘러보기</h3>
+      <div class="family-link-chips">
+        <a href="https://mindtest.chatgpts.kr" target="_blank" rel="noopener" class="family-chip-link">🧠 마인드테스트 바로가기</a>
+        <a href="https://hanja.chatgpts.kr" target="_blank" rel="noopener" class="family-chip-link">📖 한자야 놀자 바로가기</a>
+        <a href="https://voca.chatgpts.kr" target="_blank" rel="noopener" class="family-chip-link">⚡ 단어야 놀자 바로가기</a>
+      </div>
+    </section>
+
+    <!-- 하단 광고 영역 -->
+    <div class="ad-placeholder compact">
+      <span>광고 영역 (푸터 상단)</span>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="site-foot">
+      <div class="disclaimer-box">
+        <strong>※ 참고용 콘텐츠 안내</strong>
+        운세야 놀자의 모든 운세 콘텐츠는 재미와 자기성찰을 위한 참고용입니다.
+        실제 미래, 건강, 금전, 법률, 진로, 인간관계를 단정하거나 보장하지 않습니다.
+        중요한 결정은 현실적인 정보와 전문가의 조언을 함께 참고해 주세요.
+      </div>
+      <nav class="footer-nav-links" aria-label="푸터 링크">
+        <a href="index.html">홈</a> ·
+        <a href="today.html">오늘의 운세</a> ·
+        <a href="zodiac.html">띠별 운세</a> ·
+        <a href="star.html">별자리 운세</a> ·
+        <a href="tarot.html">오늘의 타로</a> ·
+        <a href="love.html">연애운</a> ·
+        <a href="login.html">내 운세함</a>
+      </nav>
+      <div class="footer-copy">
+        <p>© 2026 운세야 놀자 (fortune.chatgpts.kr) · All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1161 @@
+/* ==========================================================================
+   운세야 놀자 (fortune.chatgpts.kr) - Global Stylesheet
+   ========================================================================== */
+
+:root {
+  --bg-primary: #F8F5FF;
+  --bg-secondary: #FFF7ED;
+  --main-color: #6D28D9;
+  --main-hover: #5B21B6;
+  --main-light: #EDE9FE;
+  --main-subtle: #F3EEFF;
+  --point-color: #F59E0B;
+  --point-hover: #D97706;
+  --point-light: #FEF3C7;
+  --text-main: #1F2937;
+  --text-muted: #4B5563;
+  --text-light: #6B7280;
+  --card-bg: #FFFFFF;
+  --border-color: #E5E7EB;
+  --border-subtle: #F0EBF8;
+  --shadow-sm: 0 2px 8px rgba(109, 40, 217, 0.05);
+  --shadow-md: 0 4px 16px rgba(109, 40, 217, 0.08);
+  --shadow-lg: 0 10px 25px rgba(109, 40, 217, 0.12);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  --font-display: 'Jua', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Gowun Dodum', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-body);
+  color: var(--text-main);
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(237, 233, 254, 0.6) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(254, 243, 199, 0.5) 0%, transparent 40%),
+    linear-gradient(180deg, #F8F5FF 0%, #FFF7ED 100%);
+  background-attachment: fixed;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* 래퍼 컨테이너 */
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 18px 60px 18px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   헤더 & 네비게이션
+   ========================================================================== */
+.site-head {
+  padding: 18px 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 20px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--main-color);
+  letter-spacing: -0.5px;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.02);
+}
+
+.brand-logo .brand-icon {
+  font-size: 26px;
+  display: inline-block;
+  animation: floatOrb 3s ease-in-out infinite;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(5deg); }
+}
+
+.brand-logo .dot {
+  color: var(--point-color);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 패밀리 서비스 드롭다운 */
+.family-nav-wrap {
+  position: relative;
+}
+
+.family-btn {
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.family-btn:hover {
+  border-color: var(--main-color);
+  color: var(--main-color);
+}
+
+.family-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-subtle);
+  min-width: 170px;
+  padding: 8px 6px;
+  z-index: 100;
+  display: none;
+}
+
+.family-dropdown.show {
+  display: block;
+  animation: fadeInDown 0.2s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.family-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  transition: background 0.15s;
+}
+
+.family-dropdown a:hover {
+  background: var(--main-light);
+  color: var(--main-color);
+}
+
+/* 상단 메인 메뉴바 (가로 스크롤 가능) */
+.nav-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.nav-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-family: var(--font-display);
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-chip:hover {
+  border-color: var(--main-color);
+  color: var(--main-color);
+  transform: translateY(-1px);
+}
+
+.nav-chip.active {
+  background: var(--main-color);
+  color: #fff;
+  border-color: var(--main-color);
+  box-shadow: 0 3px 10px rgba(109, 40, 217, 0.25);
+}
+
+/* ==========================================================================
+   히어로 & 인트로 섹션
+   ========================================================================== */
+.hero-sec {
+  text-align: center;
+  padding: 10px 0 24px;
+}
+
+.today-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--point-light);
+  color: #92400E;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.35;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.hero-title span {
+  color: var(--main-color);
+}
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* 오늘의 한마디 미니 배너 */
+.daily-quote-banner {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAF5FF 100%);
+  border: 1px solid var(--main-light);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.daily-quote-banner .quote-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.daily-quote-banner .quote-text {
+  font-size: 14px;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.daily-quote-banner .quote-author {
+  display: block;
+  font-size: 12px;
+  color: var(--main-color);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   광고 플레이스홀더 (.ad-placeholder)
+   ========================================================================== */
+.ad-placeholder {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px dashed #D1D5DB;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+  color: var(--text-light);
+  font-size: 12px;
+  margin: 20px 0;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.ad-placeholder.compact {
+  padding: 10px;
+  min-height: 50px;
+}
+
+/* ==========================================================================
+   메인 인덱스 카드 리스트 (5대 CTA)
+   ========================================================================== */
+.menu-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.menu-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--main-color);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--main-light);
+}
+
+.menu-card:hover::before {
+  opacity: 1;
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.card-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--main-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.menu-card:hover .card-icon-wrap {
+  transform: scale(1.08) rotate(3deg);
+  background: var(--main-light);
+}
+
+.card-info h2 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.card-info p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.card-action-btn {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  background: var(--main-subtle);
+  color: var(--main-color);
+  font-size: 13.5px;
+  font-family: var(--font-display);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.menu-card:hover .card-action-btn {
+  background: var(--main-color);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+}
+
+/* ==========================================================================
+   서브 페이지 공통 헤더 & 컨트롤
+   ========================================================================== */
+.page-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 25px;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.page-desc {
+  font-size: 14.5px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   선택기 그리드 (띠 & 별자리 & 연애 탭)
+   ========================================================================== */
+/* 12띠 / 별자리 선택 그리드 */
+.selector-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 480px) {
+  .selector-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+
+.select-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.select-btn .btn-icon {
+  font-size: 24px;
+  transition: transform 0.2s;
+}
+
+.select-btn .btn-label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.select-btn .btn-sub {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.select-btn:hover {
+  border-color: var(--main-color);
+  transform: translateY(-2px);
+}
+
+.select-btn.active {
+  background: var(--main-color);
+  border-color: var(--main-color);
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3);
+}
+
+.select-btn.active .btn-label,
+.select-btn.active .btn-sub {
+  color: #fff;
+}
+
+.select-btn.active .btn-icon {
+  transform: scale(1.15);
+}
+
+/* 연애 상태 탭 (솔로/썸/연애중/이별후) */
+.status-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.status-tab-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 8px;
+  text-align: center;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.status-tab-btn .tab-emoji {
+  font-size: 22px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.status-tab-btn .tab-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--text-main);
+}
+
+.status-tab-btn:hover {
+  border-color: var(--main-color);
+  transform: translateY(-2px);
+}
+
+.status-tab-btn.active {
+  background: var(--main-color);
+  border-color: var(--main-color);
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3);
+}
+
+.status-tab-btn.active .tab-title {
+  color: #fff;
+}
+
+/* ==========================================================================
+   운세 결과 카드 (포춘 카드 디자인)
+   ========================================================================== */
+.fortune-result-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-md);
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  animation: cardFadeUp 0.35s ease-out;
+}
+
+@keyframes cardFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.result-target-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--main-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-date-chip {
+  font-size: 12px;
+  color: var(--text-light);
+  background: #F3F4F6;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+/* 키워드 하이라이트 배너 */
+.keyword-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--main-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.keyword-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--main-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.keyword-value {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--main-color);
+}
+
+/* 운세 섹션 블록들 */
+.result-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.result-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #FAFAFA;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--main-color);
+}
+
+.result-row.highlight {
+  background: #FFFBEB;
+  border-left-color: var(--point-color);
+}
+
+.row-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row-label .row-icon {
+  font-size: 15px;
+}
+
+.row-content {
+  font-size: 14.5px;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+/* 행운의 요소 (색상, 숫자) */
+.lucky-pill-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.lucky-pill {
+  background: #F9FAFB;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+
+.lucky-pill-title {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.lucky-pill-val {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--text-main);
+}
+
+/* 오늘의 한마디 / 조언 카드 */
+.advice-quote-box {
+  background: linear-gradient(135deg, #FAF5FF 0%, #FFFBEB 100%);
+  border: 1px dashed rgba(109, 40, 217, 0.3);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.advice-quote-box p {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--main-color);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   타로 페이지 (3D 플립 카드 & 덱 애니메이션)
+   ========================================================================== */
+.tarot-stage {
+  text-align: center;
+  padding: 10px 0 24px;
+}
+
+.tarot-instruction {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* 카드 덱 */
+.tarot-deck {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  perspective: 1000px;
+}
+
+.tarot-card-slot {
+  width: 100px;
+  height: 160px;
+  perspective: 1000px;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+@media (max-width: 480px) {
+  .tarot-card-slot {
+    width: 84px;
+    height: 135px;
+  }
+}
+
+.tarot-card-slot:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+.tarot-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+}
+
+.tarot-card-slot.flipped .tarot-card-inner {
+  transform: rotateY(180deg);
+}
+
+.tarot-front, .tarot-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* 타로 카드 뒷면 (신비로운 기하학 패턴) */
+.tarot-back {
+  background: linear-gradient(135deg, #4C1D95 0%, #1E1B4B 100%);
+  border: 2px solid #F59E0B;
+  color: #FEF3C7;
+  position: relative;
+  overflow: hidden;
+}
+
+.tarot-back::after {
+  content: '✦';
+  font-size: 32px;
+  color: #F59E0B;
+  opacity: 0.8;
+  animation: pulseStar 2s ease-in-out infinite;
+}
+
+@keyframes pulseStar {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* 타로 카드 앞면 */
+.tarot-front {
+  background: #FFFFFF;
+  border: 2px solid var(--point-color);
+  transform: rotateY(180deg);
+  color: var(--text-main);
+}
+
+.tarot-front .front-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--point-color);
+}
+
+.tarot-front .front-icon {
+  font-size: 32px;
+  margin: 6px 0;
+}
+
+.tarot-front .front-name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--main-color);
+}
+
+.tarot-single-draw-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--main-color);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35);
+  transition: all 0.2s;
+}
+
+.tarot-single-draw-btn:hover {
+  background: var(--main-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(109, 40, 217, 0.45);
+}
+
+/* 타로 결과 카드 */
+.tarot-detail-display {
+  display: none;
+  animation: cardFadeUp 0.4s ease-out;
+}
+
+.tarot-detail-display.show {
+  display: block;
+}
+
+/* ==========================================================================
+   액션 버튼 그룹 (다시보기, 공유하기, 타 운세 바로가기)
+   ========================================================================== */
+.action-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 28px;
+}
+
+.btn-primary {
+  flex: 1;
+  min-width: 140px;
+  padding: 13px 18px;
+  background: var(--main-color);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 15px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 3px 10px rgba(109, 40, 217, 0.25);
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--main-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  flex: 1;
+  min-width: 140px;
+  padding: 13px 18px;
+  background: #FFFFFF;
+  color: var(--main-color);
+  border: 1px solid var(--main-light);
+  font-family: var(--font-display);
+  font-size: 15px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--main-color);
+  background: var(--main-subtle);
+  transform: translateY(-2px);
+}
+
+/* 12띠 전체보기 아코디언/그리드 모드 */
+.all-zodiac-list {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.all-zodiac-list.show {
+  display: flex;
+}
+
+.mini-fortune-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.mini-fortune-card h4 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--main-color);
+  margin-bottom: 4px;
+}
+
+.mini-fortune-card p {
+  font-size: 13.5px;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   관련 콘텐츠 & 패밀리 사이트 섹션
+   ========================================================================== */
+.related-section {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--text-main);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 480px) {
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.related-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.related-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--main-color);
+}
+
+.related-card .rc-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.related-card .rc-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.related-card .rc-desc {
+  font-size: 11.5px;
+  color: var(--text-light);
+}
+
+/* 다른 놀자 배너 */
+.nolja-family-banner {
+  background: linear-gradient(135deg, #FAF5FF 0%, #FEF3C7 100%);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(109, 40, 217, 0.15);
+}
+
+.nolja-family-banner h3 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--main-color);
+  margin-bottom: 8px;
+}
+
+.nolja-family-banner p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.family-link-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.family-chip-link {
+  font-size: 12.5px;
+  background: #FFFFFF;
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+
+.family-chip-link:hover {
+  background: var(--main-color);
+  color: #fff;
+  border-color: var(--main-color);
+}
+
+/* ==========================================================================
+   푸터 & 필수 안내문
+   ========================================================================== */
+.site-foot {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-light);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.disclaimer-box {
+  background: #F9FAFB;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.disclaimer-box strong {
+  color: var(--text-main);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.footer-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.footer-nav-links a {
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.footer-nav-links a:hover {
+  color: var(--main-color);
+}
+
+.footer-copy {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--text-light);
+}
+
+/* ==========================================================================
+   토스트 알림
+   ========================================================================== */
+.toast-msg {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(31, 41, 55, 0.95);
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 13.5px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.toast-msg.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
