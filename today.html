@@ -21,7 +21,104 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260907_01">
+
+  <!-- 질문 카드 및 옵션 버튼 전용 스타일 (캐시 영향 없이 100% 즉시 적용) -->
+  <style>
+    .fortune-input-card {
+      background: #FFFFFF !important;
+      border: 1.5px solid #EDE9FE !important;
+      border-radius: 20px !important;
+      padding: 22px 18px !important;
+      margin-bottom: 24px !important;
+      box-shadow: 0 4px 16px rgba(109, 40, 217, 0.08) !important;
+      display: block !important;
+    }
+    .input-card-title {
+      font-family: var(--font-display, 'Jua', sans-serif) !important;
+      font-size: 19px !important;
+      color: #1F2937 !important;
+      margin-bottom: 6px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+    }
+    .input-card-desc {
+      font-size: 13.5px !important;
+      color: #6B7280 !important;
+      margin-bottom: 18px !important;
+      line-height: 1.45 !important;
+    }
+    .input-field-group {
+      margin-bottom: 16px !important;
+    }
+    .input-field-label {
+      display: block !important;
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      color: #1F2937 !important;
+      margin-bottom: 8px !important;
+    }
+    .fortune-input-control {
+      padding: 10px 14px !important;
+      border-radius: 10px !important;
+      border: 1.5px solid #E5E7EB !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      background: #FFFFFF !important;
+      color: #1F2937 !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    }
+    .option-pill-group {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .option-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      padding: 8px 15px !important;
+      border-radius: 9999px !important;
+      border: 1.5px solid #D1D5DB !important;
+      background: #FFFFFF !important;
+      color: #374151 !important;
+      font-family: inherit !important;
+      font-size: 13.5px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    .option-pill:hover {
+      border-color: #6D28D9 !important;
+      color: #6D28D9 !important;
+      background: #F3EEFF !important;
+      transform: translateY(-1px) !important;
+    }
+    .option-pill.active {
+      background: #6D28D9 !important;
+      color: #FFFFFF !important;
+      border-color: #6D28D9 !important;
+      box-shadow: 0 3px 10px rgba(109, 40, 217, 0.3) !important;
+      font-weight: 700 !important;
+    }
+    .focus-highlight-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 5px 14px !important;
+      border-radius: 9999px !important;
+      background: #FEF3C7 !important;
+      color: #92400E !important;
+      font-size: 12.5px !important;
+      font-weight: 700 !important;
+      margin-bottom: 12px !important;
+      border: 1px solid rgba(245, 158, 11, 0.3) !important;
+    }
+  </style>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321070604000141" crossorigin="anonymous"></script>

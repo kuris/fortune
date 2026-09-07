@@ -1348,34 +1348,43 @@ button {
 }
 
 .option-pill-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
 }
 
 .option-pill {
-  padding: 8px 14px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-color);
-  background: #FFFFFF;
-  color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 15px !important;
+  border-radius: 9999px !important;
+  border: 1.5px solid #D1D5DB !important;
+  background: #FFFFFF !important;
+  color: #374151 !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 .option-pill:hover {
-  border-color: var(--main-color);
-  color: var(--main-color);
+  border-color: #6D28D9 !important;
+  color: #6D28D9 !important;
+  background: #F3EEFF !important;
+  transform: translateY(-1px) !important;
 }
 
 .option-pill.active {
-  background: var(--main-color);
-  color: #FFFFFF;
-  border-color: var(--main-color);
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.2);
+  background: #6D28D9 !important;
+  color: #FFFFFF !important;
+  border-color: #6D28D9 !important;
+  box-shadow: 0 3px 10px rgba(109, 40, 217, 0.3) !important;
+  font-weight: 700 !important;
 }
 
 .focus-highlight-badge {
