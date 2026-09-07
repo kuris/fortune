@@ -1329,7 +1329,7 @@
     sbClient.auth.onAuthStateChange((event, session) => {
       currentUser = session ? session.user : null;
       updateHeaderAuth(currentUser);
-      if (window.location.pathname.endsWith('login.html')) {
+      if (document.getElementById('guest-auth-section') || window.location.pathname.includes('/login')) {
         renderLoginView();
       }
     });
@@ -1404,6 +1404,40 @@
       const rng = getRng('main_quote');
       const quote = pickItem(QUOTE_FORTUNES, rng);
       quoteBox.textContent = `“${quote}”`;
+    }
+
+    // 마인드테스트 스타일 그리드/리스트 뷰 스위처
+    const list = document.getElementById('card-list');
+    const btnGrid = document.getElementById('btn-grid');
+    const btnList = document.getElementById('btn-list');
+    if (list && btnGrid && btnList) {
+      function setView(mode) {
+        if (mode === 'list') {
+          list.classList.remove('view-grid');
+          btnList.classList.add('active');
+          btnList.setAttribute('aria-pressed', 'true');
+          btnGrid.classList.remove('active');
+          btnGrid.setAttribute('aria-pressed', 'false');
+        } else {
+          list.classList.add('view-grid');
+          btnGrid.classList.add('active');
+          btnGrid.setAttribute('aria-pressed', 'true');
+          btnList.classList.remove('active');
+          btnList.setAttribute('aria-pressed', 'false');
+        }
+        try { localStorage.setItem('fortune_view_mode', mode); } catch (e) {}
+      }
+
+      btnGrid.addEventListener('click', () => setView('grid'));
+      btnList.addEventListener('click', () => setView('list'));
+
+      let saved = null;
+      try { saved = localStorage.getItem('fortune_view_mode'); } catch (e) {}
+      if (saved === 'list') {
+        setView('list');
+      } else {
+        setView('grid');
+      }
     }
   }
 
@@ -2049,27 +2083,48 @@
   // =========================================================================
   // 7. 전역 진입점 (DOM Ready)
   // =========================================================================
+  function routePage() {
+    const p = window.location.pathname.toLowerCase();
+
+    // 1) 오늘의 종합 운세 (today)
+    if (document.getElementById('tf-general') || p.endsWith('/today') || p.endsWith('/today.html') || p.includes('/today')) {
+      initTodayPage();
+      return;
+    }
+    // 2) 띠별 운세 (zodiac)
+    if (document.getElementById('zodiac-selector') || p.endsWith('/zodiac') || p.endsWith('/zodiac.html') || p.includes('/zodiac')) {
+      initZodiacPage();
+      return;
+    }
+    // 3) 별자리 운세 (star)
+    if (document.getElementById('star-selector') || p.endsWith('/star') || p.endsWith('/star.html') || p.includes('/star')) {
+      initStarPage();
+      return;
+    }
+    // 4) 오늘의 타로 (tarot)
+    if (document.getElementById('tarot-deck-wrap') || p.endsWith('/tarot') || p.endsWith('/tarot.html') || p.includes('/tarot')) {
+      initTarotPage();
+      return;
+    }
+    // 5) 오늘의 연애운 (love)
+    if (document.getElementById('love-status-selector') || p.endsWith('/love') || p.endsWith('/love.html') || p.includes('/love')) {
+      initLovePage();
+      return;
+    }
+    // 6) 로그인 및 내 운세함 (login)
+    if (document.getElementById('guest-auth-section') || p.endsWith('/login') || p.endsWith('/login.html') || p.includes('/login')) {
+      renderLoginView();
+      return;
+    }
+    // 7) 메인 홈 (index)
+    initIndexPage();
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     initSupabase();
     initCommonLayout();
     checkAuthSession();
-
-    const path = window.location.pathname;
-    if (path.endsWith('today.html')) {
-      initTodayPage();
-    } else if (path.endsWith('zodiac.html')) {
-      initZodiacPage();
-    } else if (path.endsWith('star.html')) {
-      initStarPage();
-    } else if (path.endsWith('tarot.html')) {
-      initTarotPage();
-    } else if (path.endsWith('love.html')) {
-      initLovePage();
-    } else if (path.endsWith('login.html')) {
-      renderLoginView();
-    } else {
-      initIndexPage();
-    }
+    routePage();
   });
 
 })();
