@@ -54,6 +54,10 @@
             storageKey: 'sb-fortune-auth-token'
           }
         });
+        // 공통 로그인 모듈(CGAuth)이 이 클라이언트를 그대로 재사용합니다.
+        // 같은 storageKey 로 클라이언트를 두 개 만들면 토큰 갱신이 충돌하므로,
+        // 새로 만들지 않고 여기서 한 번만 전역에 노출합니다. (기존 로직 변경 없음)
+        window.sb = sbClient;
       } catch (err) {
         console.warn('[운세야 놀자] Supabase 초기화 오류:', err);
       }
