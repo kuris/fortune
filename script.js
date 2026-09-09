@@ -16,15 +16,22 @@
   let currentUser = null;
 
   // ---------- 콜백 & 리디렉션 주소 관리 (운세/한자/보카 분리) ----------
+  // 로그인 후 돌아올 주소 = 지금 보고 있는 페이지 (토큰 파편 제거)
+  // 공통 모듈 cg-auth.js 의 currentCleanUrl() 과 같은 규칙입니다.
+  // 예전에는 어느 페이지에서 눌러도 login.html 로 보내서, 보던 자리로 돌아오지 못했습니다.
+  // origin 을 그대로 쓰므로 localhost / vercel.app 도 따로 분기할 필요가 없습니다.
   function getFortuneRedirectUrl() {
-    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-      return location.origin + '/login.html';
+    try {
+      const u = new URL(location.href);
+      u.hash = '';
+      u.searchParams.delete('code');
+      u.searchParams.delete('error');
+      u.searchParams.delete('error_description');
+      const qs = u.searchParams.toString();
+      return u.origin + u.pathname + (qs ? '?' + qs : '');
+    } catch (e) {
+      return location.origin + location.pathname;
     }
-    // Vercel 배포 프리뷰 환경인 경우 해당 origin 유지
-    if (location.hostname.endsWith('vercel.app')) {
-      return location.origin + '/login.html';
-    }
-    return 'https://fortune.chatgpts.kr/login.html';
   }
 
   // 로그인 후 브라우저 주소창의 지저분한 hash(#access_token=...) 또는 code= 파라미터를 깨끗하게 정리
