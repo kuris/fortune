@@ -1530,18 +1530,7 @@
   }
 
   function initCommonLayout() {
-    // 패밀리 드롭다운
-    const familyBtn = document.getElementById('family-btn');
-    const familyDropdown = document.getElementById('family-dropdown');
-    if (familyBtn && familyDropdown) {
-      familyBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        familyDropdown.classList.toggle('show');
-      });
-      document.addEventListener('click', function () {
-        familyDropdown.classList.remove('show');
-      });
-    }
+    // 패밀리 드롭다운 (cg-family.js 가 자체 처리 — 구 바인딩 제거됨)
 
     // 날짜 배지 표시
     const dateElems = document.querySelectorAll('.js-today-date');
